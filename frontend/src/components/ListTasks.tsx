@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React from "react";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
@@ -12,15 +13,10 @@ interface Itask {
 
 type Props = {
   task: Itask;
-  index: number;
 };
 
-const ListTasks = ({ task, index }: Props) => {
-  return (
-    <div key={index} className="card card-body">
-      <h2>{task.name}</h2>
-    </div>
-  );
+const ListTasks = ({ task }: Props) => {
+  return <h2>{task.name}</h2>;
 };
 
 export default ListTasks;

@@ -1,3 +1,4 @@
+// eslint-disable-next-line
 import React, { Fragment, useState } from "react";
 import { Container, Col, Row } from "reactstrap";
 import TaskForm from "./components/TaskForm";
@@ -43,7 +44,9 @@ function App(): JSX.Element {
         <Row className="justify-content-center">
           <Col xs={6}>
             {tasks.map((task: Itask, index: number) => (
-              <ListTasks index={index} task={task} />
+              <div key={index} className="card card-body">
+                <ListTasks task={task} />
+              </div>
             ))}
           </Col>
         </Row>
