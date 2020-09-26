@@ -1,6 +1,11 @@
 import React, { Fragment, useState } from "react";
-import { createNoSubstitutionTemplateLiteral } from "typescript";
+import { Button, Form, Input, Container, Col, Row } from "reactstrap";
+/** @jsx jsx */
+import { jsx } from "@emotion/core";
 
+const borde = {
+  borderStyle: "solid",
+};
 type FormElement = React.FormEvent<HTMLFormElement>;
 interface Itask {
   name: string;
@@ -24,15 +29,41 @@ function App(): JSX.Element {
 
   return (
     <Fragment>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          onChange={(e) => setNewTask(e.target.value)}
-          value={newTask}
-        />
-
-        <button>Enviar</button>
-      </form>
+      <Container
+        css={[
+          borde,
+          {
+            borderWidth: 1,
+            borderColor: "gray",
+            borderRadius: 10,
+            padding: 15,
+          },
+        ]}
+      >
+        <Row className="justify-content-center">
+          <Col xs={5}>
+            <Form onSubmit={handleSubmit} css={{ marginBottom: 15 }}>
+              <Input
+                type="text"
+                onChange={(e) => setNewTask(e.target.value)}
+                value={newTask}
+                css={{ marginBottom: 15 }}
+                data-testid="task-inputs"
+              />
+              <Button>Enviar</Button>
+            </Form>
+          </Col>
+        </Row>
+        <Row className="justify-content-center">
+          <Col xs={6}>
+            {tasks.map((task: Itask, index: number) => (
+              <div key={index} className="card card-body">
+                <h2>{task.name}</h2>
+              </div>
+            ))}
+          </Col>
+        </Row>
+      </Container>
     </Fragment>
   );
 }
