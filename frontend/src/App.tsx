@@ -1,12 +1,13 @@
 import React, { Fragment, useState } from "react";
-import { Button, Form, Input, Container, Col, Row } from "reactstrap";
+import { Container, Col, Row } from "reactstrap";
+import TaskForm from "./components/TaskForm";
+import ListTasks from "./components/ListTasks";
 /** @jsx jsx */
 import { jsx } from "@emotion/core";
 
 const borde = {
   borderStyle: "solid",
 };
-type FormElement = React.FormEvent<HTMLFormElement>;
 interface Itask {
   name: string;
   done: boolean;
@@ -15,17 +16,6 @@ interface Itask {
 function App(): JSX.Element {
   const [newTask, setNewTask] = useState<string>("");
   const [tasks, setTasks] = useState<Itask[]>([]);
-
-  const handleSubmit = (e: FormElement) => {
-    e.preventDefault();
-    addTask(newTask);
-    setNewTask("");
-  };
-
-  const addTask = (name: string) => {
-    const newTasks: Itask[] = [...tasks, { name, done: false }];
-    setTasks(newTasks);
-  };
 
   return (
     <Fragment>
@@ -42,24 +32,18 @@ function App(): JSX.Element {
       >
         <Row className="justify-content-center">
           <Col xs={5}>
-            <Form onSubmit={handleSubmit} css={{ marginBottom: 15 }}>
-              <Input
-                type="text"
-                onChange={(e) => setNewTask(e.target.value)}
-                value={newTask}
-                css={{ marginBottom: 15 }}
-                data-testid="task-inputs"
-              />
-              <Button>Enviar</Button>
-            </Form>
+            <TaskForm
+              newTask={newTask}
+              setNewTask={setNewTask}
+              tasks={tasks}
+              setTasks={setTasks}
+            />
           </Col>
         </Row>
         <Row className="justify-content-center">
           <Col xs={6}>
             {tasks.map((task: Itask, index: number) => (
-              <div key={index} className="card card-body">
-                <h2>{task.name}</h2>
-              </div>
+              <ListTasks index={index} task={task} />
             ))}
           </Col>
         </Row>
